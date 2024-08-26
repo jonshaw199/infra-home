@@ -17,7 +17,7 @@ services:
     image: shaw-familly
     container_name: shaw-family
     build:
-      context: https://github.com/jonshaw199/shaw-family.git
+      context: ./shaw-family
     networks:
       - my_network
     expose:
