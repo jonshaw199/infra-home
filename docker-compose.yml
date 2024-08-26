@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   nginx:
     image: nginx:latest
@@ -19,7 +17,7 @@ services:
     image: shaw-familly
     container_name: shaw-family
     build:
-      context: https://github.com/jonshaw199/shaw-family.git#main:web
+      context: https://github.com/jonshaw199/shaw-family.git
     networks:
       - my_network
     expose:
