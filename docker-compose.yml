@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - /etc/letsencrypt:/etc/letsencrypt
+    networks:
+      - my_network
+    depends_on:
+      - shaw-family
+
+  shaw-family:
+    image: shaw-familly
+    container_name: shaw-family
+    build:
+      context: https://github.com/jonshaw199/shaw-family.git#main:web
+    networks:
+      - my_network
+    expose:
+      - "3000"
+
+networks:
+  my_network:
+    driver: bridge
