@@ -12,6 +12,7 @@ services:
       - my_network
     depends_on:
       - shaw-family
+    restart: always
 
   shaw-family:
     image: shaw-familly
@@ -22,6 +23,7 @@ services:
       - my_network
     expose:
       - "3000"
+    restart: always
 
 networks:
   my_network:
