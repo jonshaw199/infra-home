@@ -7,13 +7,9 @@ services:
       - "443:443"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/html:/var/www/html
       - ./nginx/certificates:/etc/letsencrypt
-      - ./nginx/logs:/var/log/nginx
     networks:
       - my_network
-    depends_on:
-      - shaw-family
     restart: always
 
   shaw-family:
@@ -32,9 +28,6 @@ services:
     volumes:
       - ./nginx/certificates:/etc/letsencrypt
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/html:/var/www/html
-      - ./var/lib/letsencrypt:/var/lib/letsencrypt
-      - ./var/log/letsencrypt:/var/log/letsencrypt
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     networks:
       - my_network
