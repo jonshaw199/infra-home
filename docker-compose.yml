@@ -36,9 +36,9 @@ services:
     networks:
       - my_network
     ports:
-      - "3001:3001"
+      - "3001:80"
     expose:
-      - "3001"
+      - "80"
     restart: always
 
   certbot:

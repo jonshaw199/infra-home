@@ -18,6 +18,6 @@ FROM nginx:alpine
 
 COPY --from=build /jonshaw199/dist /usr/share/nginx/html
 
-EXPOSE 3001
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
