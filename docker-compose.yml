@@ -10,7 +10,7 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/certificates:/etc/letsencrypt # This is where your SSL certs are stored
       - ./nginx/html:/var/www/html # Directory to serve .well-known for Certbot
-      - ./nginx/logs:var/log/nginx
+      - ./nginx/logs:/var/log/nginx
     networks:
       - my_network
     restart: always
