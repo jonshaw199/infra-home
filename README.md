@@ -23,3 +23,5 @@ Breakdown of the `openssl` command:
 ## TODO
 
 - Investigate permissions for ./nginx/logs directory; containers need to be able to write to this directory
+  - Confirmed; this needs to be fixed asap
+  - For now, run `chmod 777 ./nginx/logs`
