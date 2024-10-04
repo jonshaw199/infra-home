@@ -19,3 +19,7 @@ Breakdown of the `openssl` command:
 -keyout: The location of the generated private key (privkey.pem).
 -out: The location of the generated certificate (fullchain.pem).
 -subj: This is the subject of the certificate, where /CN= defines the Common Name (the domain the certificate is for).
+
+## TODO
+
+- Investigate permissions for ./nginx/logs directory; containers need to be able to write to this directory
