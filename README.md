@@ -1,6 +1,6 @@
 ## Setup
 
-- `chmod 777 ./nginx/logs` (see todo below)
+- Run `setup.sh`
 
 ## TODO
 
