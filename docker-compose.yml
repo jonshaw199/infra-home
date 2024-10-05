@@ -63,3 +63,5 @@ services:
 networks:
   my_network:
     driver: bridge
+  home_network:
+    external: true
