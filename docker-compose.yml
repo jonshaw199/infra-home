@@ -23,6 +23,7 @@ services:
       ]
     networks:
       - my_network
+      - home_home_network
     restart: always
 
   shaw-family:
@@ -63,5 +64,5 @@ services:
 networks:
   my_network:
     driver: bridge
-  home_network:
+  home_home_network: # Note the `home_` prefix!
     external: true
