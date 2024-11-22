@@ -1,3 +1,6 @@
 var
 nginx/certificates
 nginx/logs
+
+dnsmasq.d
+pihole
