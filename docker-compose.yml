@@ -61,6 +61,26 @@ services:
     networks:
       - my_network
 
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    restart: unless-stoppped
+    environment:
+      TZ: "America/Los_Angeles"
+      WEBPASSWORD: "admin"
+    volumes:
+      - ./pihole:/etc/pihole
+      - ./dnsmasq.d:/etc/dnsmasq.d
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8085:80" # Map Pi-hole's web interface to port 8085
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    cap_add:
+      - NET_ADMIN # Allows Pi-hole to manage network traffic
+
 networks:
   my_network:
     driver: bridge
