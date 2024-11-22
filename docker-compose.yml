@@ -64,7 +64,7 @@ services:
   pihole:
     image: pihole/pihole:latest
     container_name: pihole
-    restart: unless-stoppped
+    restart: unless-stopped
     environment:
       TZ: "America/Los_Angeles"
       WEBPASSWORD: "admin"
