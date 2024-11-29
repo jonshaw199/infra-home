@@ -1,7 +1,6 @@
 services:
   nginx:
     image: openresty/openresty:alpine
-    container_name: nginx
     ports:
       - "80:80"
       - "443:443"
@@ -24,33 +23,27 @@ services:
     networks:
       - my_network
       - home_home_network
-    restart: always
+    restart: unless-stopped
 
   shaw-family:
-    image: shaw-familly
-    container_name: shaw-family
-    build:
-      context: ./shaw-family
+    build: ./shaw-family
     networks:
       - my_network
     ports:
       - "3000:3000"
     expose:
       - "3000"
-    restart: always
+    restart: unless-stopped
 
   jonshaw199:
-    image: jonshaw199
-    container_name: jonshaw199
-    build:
-      context: ./jonshaw199
+    build: ./jonshaw199
     networks:
       - my_network
     ports:
       - "3001:80"
     expose:
       - "80"
-    restart: always
+    restart: unless-stopped
 
   certbot:
     image: certbot/certbot
@@ -60,11 +53,10 @@ services:
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     networks:
       - my_network
+    restart: unless-stopped
 
   pihole:
     image: pihole/pihole:latest
-    container_name: pihole
-    restart: unless-stopped
     environment:
       TZ: "America/Los_Angeles"
       WEBPASSWORD: "admin"
@@ -80,6 +72,7 @@ services:
       - 1.1.1.1
     cap_add:
       - NET_ADMIN # Allows Pi-hole to manage network traffic
+    restart: unless-stopped
 
 networks:
   my_network:
