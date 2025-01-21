@@ -1,6 +1,11 @@
 ## Setup
 
 - Run `setup.sh`
+- Point domain names to localhost in `/etc/hosts`: <--- TODO: Confirm if this is necessary
+  - `jonshaw199.com`
+  - `www.jonshaw199.com`
+  - `shawfamily.online`
+  - `www.shawfamily.online`
 
 ## TODO
 
