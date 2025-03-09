@@ -21,14 +21,14 @@ services:
         "/etc/nginx/nginx.conf",
       ]
     networks:
-      - my_network
-      - home_home_network
+      - home_network
+      # - home_home_network
     restart: unless-stopped
 
   shaw-family:
     build: ./shaw-family
     networks:
-      - my_network
+      - home_network
     ports:
       - "3000:3000"
     expose:
@@ -38,7 +38,7 @@ services:
   jonshaw199:
     build: ./jonshaw199
     networks:
-      - my_network
+      - home_network
     ports:
       - "3001:80"
     expose:
@@ -52,7 +52,7 @@ services:
       - ./nginx/html:/var/www/html
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     networks:
-      - my_network
+      - home_network
     restart: unless-stopped
 
   pihole:
@@ -74,8 +74,42 @@ services:
       - NET_ADMIN # Allows Pi-hole to manage network traffic
     restart: unless-stopped
 
+  wg-easy:
+    environment:
+      - WG_HOST=jonshaw199.com
+      - PASSWORD_HASH=$$2a$$12$$vzotg.wi6CdAgQpvFW7V6.Ru5qwKJls8AseKEKae4Y7oPEzBWuIN6
+    image: ghcr.io/wg-easy/wg-easy # :15
+    container_name: wg-easy
+    networks:
+      home_network:
+        ipv4_address: 10.42.42.42
+        ipv6_address: fdcc:ad94:bacf:61a3::2a
+    volumes:
+      - /home/jon/wg-easy:/etc/wireguard
+      - /lib/modules:/lib/modules:ro
+    ports:
+      - "51820:51820/udp"
+      - "51821:51821/tcp"
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+      # - NET_RAW # ⚠️ Uncomment if using Podman Compose
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.all.forwarding=1
+      - net.ipv6.conf.default.forwarding=1
+
 networks:
-  my_network:
+  home_network:
     driver: bridge
-  home_home_network: # Note the `home_` prefix!
-    external: true
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.42.42.0/24
+        - subnet: fdcc:ad94:bacf:61a3::/64
+  # home_home_network: # Note the `home_` prefix!
+  #   external: true
